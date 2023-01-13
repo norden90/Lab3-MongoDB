@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wXnvsuO+apJwt18RoGTOBprPgCOWZe+U/89N8uKN/ibKlFqv9ItNmNcsgPAAW28OdZfC2ZR8LGdMTt2S2+50CA==",
+  "dgSpecHash": "/v0FCytRPS1UTx6SykL6NX+Q1iRtKi8UexJY7JCuk99OR0FTrlN4rX3WE/qr+/ZY24mkpT+MNgBMt1LKZ2jwhQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\Lab3-MongoDB\\Lab3-MongoDB.csproj",
+  "projectFilePath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nordf\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\nordf\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",

@@ -252,19 +252,6 @@
         "runtime": {
           "lib/net6.0/ZstdSharp.dll": {}
         }
-      },
-      "DataAccess/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "MongoDB.Driver": "2.18.0"
-        },
-        "compile": {
-          "bin/placeholder/DataAccess.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DataAccess.dll": {}
-        }
       }
     }
   },
@@ -674,16 +661,11 @@
         "zstdsharp.port.0.6.2.nupkg.sha512",
         "zstdsharp.port.nuspec"
       ]
-    },
-    "DataAccess/1.0.0": {
-      "type": "project",
-      "path": "../DataAccess/DataAccess.csproj",
-      "msbuildProject": "../DataAccess/DataAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "DataAccess >= 1.0.0"
+      "MongoDB.Driver >= 2.18.0"
     ]
   },
   "packageFolders": {
@@ -693,11 +675,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\Lab3-MongoDB\\Lab3-MongoDB.csproj",
-      "projectName": "Lab3-MongoDB",
-      "projectPath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\Lab3-MongoDB\\Lab3-MongoDB.csproj",
+      "projectUniqueName": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\DataAccess.csproj",
+      "projectName": "DataAccess",
+      "projectPath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\nordf\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\Lab3-MongoDB\\obj\\",
+      "outputPath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -718,11 +700,7 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {
-            "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\nordf\\OneDrive\\Skrivbord\\GitHub\\Lab3-MongoDB\\DataAccess\\DataAccess.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -734,6 +712,12 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
+        "dependencies": {
+          "MongoDB.Driver": {
+            "target": "Package",
+            "version": "[2.18.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
