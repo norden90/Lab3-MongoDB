@@ -1,10 +1,6 @@
 ﻿namespace DataAccess;
 
-public interface IRepository<C>
+public interface IRepository
 {
-    //void Add(C item);
-
-    //IEnumerable<C> GetAll();
-
-
+    
 }
