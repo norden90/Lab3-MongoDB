@@ -1,5 +1,5 @@
-﻿using DataAccess;
-using DataAccess.Models;
-using System;
+﻿using DataAccess.Managers;
 
-var storeManager = new StoreManager();
+var customerManager = new CustomerManager();
+var productManager = new ProductManager();
+
