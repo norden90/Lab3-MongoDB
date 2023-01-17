@@ -1,6 +1,7 @@
 ﻿using DataAccess.Managers;
 using DataAccess.Models;
 using System;
+using System.Reflection;
 
 var customerManager = new CustomerManager();
 var productManager = new ProductManager();
@@ -25,6 +26,7 @@ Customer? loggedInCustomer = null;
 //productManager.Add(beverage);
 //productManager.Add(sausage);
 
+
 var allCustomers = customerManager.GetAll();
 var allProducts = productManager.GetAll();
 
@@ -32,179 +34,196 @@ Start();
 
 void Start()
 {
-    //Console.WriteLine("Hej och välkommen till TruckStore!\n" +
-    //                  "[1]: Tryck 1 för att logga in?\n" +
-    //                  "[2]: Tryck 2 för att skapa en ny kund.");
-    //var input = Console.ReadLine();
 
-    foreach (var customer in allCustomers)
+    Console.WriteLine("Hej och välkommen till TruckStore!\n" +
+                      "[1]: Tryck 1 för att logga in?\n" +
+                      "[2]: Tryck 2 för att skapa en ny kund.\n" +
+                      "[3]: Lägga till varor i sortimentet.");
+
+    var input = Console.ReadKey();
+
+
+    if(input.KeyChar == '1')
     {
-        Console.WriteLine($"{customer.Name} | {customer.Password}");
+        LogIn();
+    }
+    else if (input.KeyChar == '2')
+    {
+       
+        customerManager.Add(AddCustomer());
+        LogIn();
+    }
+    else if(input.KeyChar == '3')
+
+    {
+        productManager.Add(AddProduct());
+        Start();
+    }
+    else
+    {
+        Environment.Exit(0);
     }
 
-    foreach (var product in allProducts)
+}
+Customer AddCustomer()
+
+{
+    Console.Clear();
+    Console.Write("Skapa ditt nya konto här\n" +
+                  "Ange ditt namn:"); string tempName = Console.ReadLine();
+    Console.Write("Ange ett lösenord:"); string tempPass = Console.ReadLine();
+
+    var customer = new Customer(tempName, tempPass);
+
+    return customer;
+}
+
+Product AddProduct()
+{
+    Console.Clear();
+    Console.Write("Vad vill du lägga till? "); string tempName = Console.ReadLine();
+    Console.Write("Hur mycket ska en kosta? "); int tempPrice = Int32.Parse(Console.ReadLine());
+    Console.Write("Och hur många vill du lägga till? "); int tempAmount = Int32.Parse(Console.ReadLine());
+
+    var product = new Product(tempName, tempPrice, tempAmount);
+
+    return product;
+}
+
+void LogIn()
+{
+    Console.Clear();
+    Console.Write("Ange ditt namn:");
+    var inputUsername = Console.ReadLine();
+    Console.Write("Ange ditt lösenord:");
+    var inputPassword = Console.ReadLine();
+
+    foreach (var customer in customerManager.GetAll())
     {
-        Console.WriteLine($"{product.Name} | {product.Amount}");
+        if (inputUsername == customer.Name)
+        {
+            if (customer.VerifyPassword(inputPassword))
+            {
+                Console.Clear();
+                Console.WriteLine("Välkommen!");
+                loggedInCustomer = customer;
+                MainMenu();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine($"Du skrev fel lösenord {inputUsername}!\n" +
+                                  $"Var vänligen och försök igen.");
+                Console.ReadKey();
+                LogIn();
+            }
+
+        }
+    }
+
+    foreach (var customer in customerManager.GetAll())
+
+        if (inputPassword != customer.Name)
+        {
+            Console.WriteLine($"{inputUsername} existerar inte! Vill du skapa en ny?\n" +
+                              $"[1]: Tryck 1 för ja.\n" +
+                              $"[2]: Tryck 2 för nej.");
+            var input = Console.ReadKey();
+            if (input.KeyChar == '1')
+            {
+                customerManager.Add(AddCustomer());
+                LogIn();
+            }
+            else if (input.KeyChar == '2')
+            {
+                Console.WriteLine("Det var tråkigt....");
+                Console.ReadKey();
+                Start();
+            }
+        }
+}
+
+
+
+
+void MainMenu()
+{
+    while (true)
+    {
+
+        Console.Clear();
+        Console.WriteLine("Välkommen till min butik!");
+        Console.WriteLine("\n Var god och välj i menyn.\n" +
+                          "[A] Vad finns det för varor?\n" +
+                          "[S] Lägg till varor.\n" +
+                          "[D] Kolla i din kundvagn.\n" +
+                          "[F] Totala kostnad för dina köp.\n" +
+                          "[G] Betala dina varor.\n" +
+                          "[T] Vilka kunder finns i butiken?\n" +
+                          "[Q] Logga ut\n" +
+                          "                      \n" +
+                          "       _______________\n" +
+                          "    _ / _ |[][][][][] | - -\n" +
+                          "   (      FoodStore   | - -\n" +
+                          "   = --OO------ - OO-- = dwb\n ");
+
+        ConsoleKeyInfo inputFromUser = Console.ReadKey(true);
+        switch (inputFromUser.Key)
+        {
+
+            case ConsoleKey.A:
+                {
+                    ShowProducts();
+                    break;
+                }
+            case ConsoleKey.S:
+                {
+                    //AddCart();
+                    break;
+                }
+            case ConsoleKey.D:
+                {
+                    //CheckCart(loggedInCustomer.Cart);
+                    break;
+                }
+            case ConsoleKey.F:
+                {
+                    //CalcCart(loggedInCustomer.Cart);
+                    break;
+                }
+            case ConsoleKey.G:
+                {
+                    //CashOut();
+                    break;
+                }
+            case ConsoleKey.T:
+                {
+                    //ShowList(kunder);
+                    break;
+                }
+
+            case ConsoleKey.Q:
+                {
+                    LogOut();
+                    return;
+                }
+
+        }
+
     }
 }
 
-//if (input == "1")
-//    {
-//        Console.WriteLine("Går till log in");
-//        LogIn();
-//    }
-//    else if (input == "2")
-//    {
-//        kunder.Add(AddCustomer());
-//        LogIn();
-//    }
-//}
-
-//void LogIn()
-//{
-//    Console.Clear();
-//    Console.Write("Ange ditt namn:");
-//    var inputUsername = Console.ReadLine();
-//    Console.Write("Ange ditt lösenord:");
-//    var inputPassword = Console.ReadLine();
-
-//    foreach (var customer in customerManager.GetAll())
-//    {
-//        if (inputUsername == customer.Name)
-//        {
-//            if (customer.VerifyPassword(inputPassword))
-//            {
-//                Console.Clear();
-//                Console.WriteLine("Välkommen!");
-//                loggedInCustomer = customer;
-//                Console.ReadKey();
-//                MainMenu();
-//            }
-//            else
-//            {
-//                Console.Clear();
-//                Console.WriteLine($"Du skrev fel lösenord {inputUsername}!\n" +
-//                                  $"Var vänligen och försök igen.");
-//                Console.ReadKey();
-//                LogIn();
-//            }
-
-//        }
-//    }
-
-//    foreach (var customer in customerManager.GetAll())
-
-//        if (inputPassword != customer.Name)
-//        {
-//            Console.WriteLine($"{inputUsername} existerar inte! Vill du skapa en ny?\n" +
-//                              $"[1]: Tryck 1 för ja.\n" +
-//                              $"[2]: Tryck 2 för nej.");
-//            var input = Console.ReadLine();
-//            if (input == "1")
-//            {
-//                kunder.Add(AddCustomer());
-//                LogIn();
-//            }
-//            else if (input == "2")
-//            {
-//                Console.WriteLine("Det var tråkigt....");
-//                Console.ReadKey();
-//                Start();
-//            }
-//        }
-//}
-
-//void MainMenu()
-//{
-//    while (true)
-//    {
-
-//        Console.Clear();
-//        Console.WriteLine("Välkommen till min butik!");
-//        Console.WriteLine("\n Var god och välj i menyn.\n" +
-//                          "[A] Vad finns det för varor?\n" +
-//                          "[S] Lägg till varor.\n" +
-//                          "[D] Kolla i din kundvagn.\n" +
-//                          "[F] Totala kostnad för dina köp.\n" +
-//                          "[G] Betala dina varor.\n" +
-//                          "[T] Vilka kunder finns i butiken?\n" +
-//                          "[Q] Logga ut\n" +
-//                          "                      \n" +
-//                          "       _______________\n" +
-//                          "    _ / _ |[][][][][] | - -\n" +
-//                          "   (      FoodStore   | - -\n" +
-//                          "   = --OO------ - OO-- = dwb\n ");
-
-//        ConsoleKeyInfo inputFromUser = Console.ReadKey(true);
-//        switch (inputFromUser.Key)
-//        {
-
-//            case ConsoleKey.A:
-//                {
-//                    ShowProducts();
-//                    break;
-//                }
-//            case ConsoleKey.S:
-//                {
-//                    AddCart();
-//                    break;
-//                }
-//            case ConsoleKey.D:
-//                {
-//                    CheckCart(loggedInCustomer.Cart);
-//                    break;
-//                }
-//            case ConsoleKey.F:
-//                {
-//                    CalcCart(loggedInCustomer.Cart);
-//                    break;
-//                }
-//            case ConsoleKey.G:
-//                {
-//                    CashOut();
-//                    break;
-//                }
-//            case ConsoleKey.T:
-//                {
-//                    ShowList(kunder);
-//                    break;
-//                }
-
-//            case ConsoleKey.Q:
-//                {
-//                    LogOut();
-//                    return;
-//                }
-
-//        }
-
-//    }
-//}
-
-//void ShowProducts()
-//{
-//    Console.Clear();
-//    foreach (var item in produkter)
-//    {
-//        if (item.Name == apple.Name)
-//        {
-//            Console.WriteLine($"Vi har äpplen." +
-//                $"Priset för ett äpple är {apple.Price}.\n");
-//        }
-//        else if (item.Name == beverage.Name)
-//        {
-//            Console.WriteLine($"Vi har Pepsi max i butiken." +
-//                $"En flaska kostar {item.Price}.\n");
-//        }
-//        else if (item.Name == sausage.Name)
-//        {
-//            Console.WriteLine($"Och tillsist har vi korvar från Dusseldorf." +
-//                $"Priset för en korv är {item.Price}.\n");
-//        }
-//    }
-//    Console.WriteLine("Här är våra varor.");
-//    Console.ReadKey();
-//}
+void ShowProducts()
+{
+    Console.Clear();
+    Console.WriteLine("********  I vårt laget ********");
+    foreach (var item in productManager.GetAll())
+    {
+        Console.WriteLine($"{item.Name} antal {item.Amount} :Pris {item.Price} styck");
+    }
+    Console.WriteLine("Här är våra varor.");
+    Console.ReadKey();
+}
 
 //void AddCart()
 //{
@@ -414,14 +433,14 @@ void Start()
 //    }
 //}
 
-//void LogOut()
-//{
-//    Console.Clear();
-//    Console.WriteLine($"{loggedInCustomer.Name} loggas ut\n" +
-//        $"Välkommen åter!");
-//    Console.ReadKey();
-//    Start();
-//}
+void LogOut()
+{
+    Console.Clear();
+    Console.WriteLine($"{loggedInCustomer.Name} loggas ut\n" +
+        $"Välkommen åter!");
+    Console.ReadKey();
+    Start();
+}
 
 //void ShowList(List<Customer> kunder)
 //{
@@ -432,17 +451,4 @@ void Start()
 //    }
 //    Console.ReadKey();
 //}
-
-Customer AddCustomer()
-
-{
-    Console.WriteLine("Skapa ditt nya konto här\n" +
-                      "Ange ditt namn"); string tempName = Console.ReadLine();
-    Console.WriteLine("Ange ett lösenord"); string tempPass = Console.ReadLine();
-
-    var customer = new Customer(tempName, tempPass);
-
-    return customer;
-}
-
 

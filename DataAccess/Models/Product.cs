@@ -14,12 +14,11 @@ public class Product
     [BsonElement]
     public int Amount { get; set; }
 
-    public Product(string name, int price, int amount, int id)
+    public Product(string name, int price, int amount)
     {
         Name = name;
         Price = price;
         Amount = amount;
-        Id = id;
     }
-
+    
 }

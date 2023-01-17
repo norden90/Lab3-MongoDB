@@ -25,6 +25,7 @@ public class CustomerManager : IRepository<Customer>
         _customerCollection.InsertOne(item);
     }
 
+
     public IEnumerable<Customer> GetAll()
     {
         return _customerCollection.Find(_ => true).ToEnumerable();
@@ -44,4 +45,6 @@ public class CustomerManager : IRepository<Customer>
     {
         return;
     }
+
+
 }

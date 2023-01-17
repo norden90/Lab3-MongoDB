@@ -31,4 +31,21 @@ public class Customer
         _cart = new List<Product>();
     }
 
+    public bool VerifyPassword(string pw)
+    {
+        return Password == pw;
+    }
+    public Customer AddCustomer()
+
+    {
+        Console.Clear();
+        Console.Write("Skapa ditt nya konto här\n" +
+                      "Ange ditt namn:"); string tempName = Console.ReadLine();
+        Console.Write("Ange ett lösenord:"); string tempPass = Console.ReadLine();
+
+        var customer = new Customer(tempName, tempPass);
+
+        return customer;
+    }
+
 }
