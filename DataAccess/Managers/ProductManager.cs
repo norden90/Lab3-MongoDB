@@ -41,11 +41,7 @@ public class ProductManager : IRepository<Product>
 
     public void Delete(object id)
     {
-        return;
-    }
-
-    public void AddProductToStore()
-    {
-
+        var filter = Builders<Product>.Filter.Eq("Id", id);
+        _productCollection.DeleteOne(filter);
     }
 }
